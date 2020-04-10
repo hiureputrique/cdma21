@@ -10,45 +10,62 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  List<String> _products = ['Computador'];
+  List<String> _tarefas = ['Estudar'];
+  
+  final myController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(title: Center(child: Text('CDM - Tarefa A2.1'))),
-        body: Column(children: [
-          Container(
+        appBar:AppBar(
+          title: Center(
+            child: Text('CDM - Tarefa A2.1')
+          )
+        ),
+        body: SingleChildScrollView(
+          child: Column(children: [
+           Container(
               margin: EdgeInsets.all(20.0),
-              child: Center(
-                child: RaisedButton(
-                    onPressed: () {
-                      setState(() {
-                        _products.add('Mouse');
-                      });
-                    },
-                    child: Text(
-                      'Olá Mundo!',
-                      style: TextStyle(fontSize: 22),
-                    )),
-              )),
+               child: Column(
+                children: <Widget>[
+                  TextField(
+                    controller: myController,
+                    ),
+                  Center(
+                    child: RaisedButton(
+                      onPressed: () {
+                        setState(() {
+                          _tarefas.add(myController.text);
+                          myController.clear();
+                          });
+                        },
+                        child: Text(
+                          'Adicionar tarefa',
+                           style: TextStyle(fontSize: 22),
+                        )),
+                ),
+                ],
+               )
+           ),
           Column(
-              children: _products
-                  .map((element) => Card(
-                        child: Column(
-                          children: <Widget>[
-                            Padding(
-                              child: Text(
-                                element,
-                                style: TextStyle(fontSize: 18),
-                              ),
-                              padding: EdgeInsets.all(5.0),
-                            )
-                          ],
+                children: _tarefas
+                 .map((element) => Card(
+                   child: Column(
+                    children: <Widget>[
+                      Padding(
+                        child: Text(
+                          element,
+                          style: TextStyle(fontSize: 18),
                         ),
-                      ))
-                  .toList()),
+                        padding: EdgeInsets.all(5.0),
+                      )
+                    ],
+                   ),
+                 ))
+             .toList()),
         ]),
+      ),
       ),
     );
   }
